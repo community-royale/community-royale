@@ -1,30 +1,11 @@
-"use client";
 import BottomNavigation from "@/components/bottom-navigation";
-import HomeSection from "@/components/home-section";
+import ConvinceSection from "@/components/convince-section";
 import { SparklesCore } from "@/components/sparkles";
 import TopNavigation from "@/components/top-navigation";
-import { initTelegramApp } from "@/lib/telegram";
-import { useEffect } from "react";
 
-export default function Home() {
-  useEffect(() => {
-    const initTelegram = async () => {
-      try {
-        const webApp = await initTelegramApp();
-        // Store WebApp instance in global state if needed
-        console.log("Telegram WebApp initialized");
-      } catch (error) {
-        console.error("Failed to initialize Telegram WebApp:", error);
-      }
-    };
-
-    if (typeof window !== "undefined") {
-      initTelegram();
-    }
-  }, []);
+export default function ConvincePage() {
   return (
     <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden max-w-[375px] mx-auto">
-      {/* Top Navigation */}
       <TopNavigation />
       {/* Ambient background with moving particles */}
       <div className="h-full w-full absolute inset-0 z-0">
@@ -38,7 +19,7 @@ export default function Home() {
           particleColor="#FFFFFF"
         />
       </div>
-      <HomeSection />
+      <ConvinceSection />
       <div className="relative z-10">
         <BottomNavigation />
       </div>

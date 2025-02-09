@@ -1,20 +1,30 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select } from "@/components/ui/select"
-import { CoinsIcon as CoinIcon, DollarSign } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CoinsIcon as CoinIcon, DollarSign } from "lucide-react";
+import Image from "next/image";
 
 export function BetPlacement() {
-  const [betAmount, setBetAmount] = useState("")
-  const [selectedTeam, setSelectedTeam] = useState("")
+  const [betAmount, setBetAmount] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const [selectedCrypto, setSelectedCrypto] = useState("");
 
   const handlePlaceBet = () => {
     // Here you would handle the bet placement logic
-    console.log(`Placed bet of $${betAmount} on ${selectedTeam}`)
-  }
+    console.log(
+      `Placed bet of $${betAmount} on ${selectedTeam} using ${selectedCrypto}`
+    );
+  };
 
   return (
     <motion.div
@@ -26,11 +36,17 @@ export function BetPlacement() {
       <h2 className="text-2xl font-bold text-white mb-4">Place Your Bet</h2>
       <div className="space-y-4">
         <div>
-          <label htmlFor="betAmount" className="block text-sm font-medium text-gray-300 mb-1">
+          <label
+            htmlFor="betAmount"
+            className="block text-sm font-medium text-gray-300 mb-1"
+          >
             Bet Amount
           </label>
           <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <DollarSign
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={18}
+            />
             <Input
               id="betAmount"
               type="number"
@@ -42,30 +58,68 @@ export function BetPlacement() {
           </div>
         </div>
         <div>
-          <label htmlFor="teamSelect" className="block text-sm font-medium text-gray-300 mb-1">
-            Select Team
+          <label
+            htmlFor="cryptoSelect"
+            className="block text-sm font-medium text-gray-300 mb-1"
+          >
+            Select Cryptocurrency
           </label>
           <Select
-            id="teamSelect"
-            value={selectedTeam}
-            onValueChange={setSelectedTeam}
-            className="w-full bg-gray-800 text-white border-purple-500/50 focus:border-purple-500"
+            value={selectedCrypto}
+            onValueChange={(value) => setSelectedCrypto(value)}
           >
-            <option value="">Select a team</option>
-            <option value="team1">Team 1</option>
-            <option value="team2">Team 2</option>
+            <SelectTrigger className="bg-gray-800 text-white border-purple-500/50 focus:border-purple-500">
+              <SelectValue placeholder="Select a cryptocurrency" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="BTC">
+                <div className="flex items-center">
+                  <Image
+                    src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=040"
+                    alt="Bitcoin"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                  />
+                  Bitcoin (BTC)
+                </div>
+              </SelectItem>
+              <SelectItem value="ETH">
+                <div className="flex items-center">
+                  <Image
+                    src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=040"
+                    alt="Ethereum"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                  />
+                  Ethereum (ETH)
+                </div>
+              </SelectItem>
+              <SelectItem value="XRP">
+                <div className="flex items-center">
+                  <Image
+                    src="https://cryptologos.cc/logos/xrp-xrp-logo.svg?v=040"
+                    alt="Ripple"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                  />
+                  Ripple (XRP)
+                </div>
+              </SelectItem>
+            </SelectContent>
           </Select>
         </div>
         <Button
           onClick={handlePlaceBet}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-          disabled={!betAmount || !selectedTeam}
+          disabled={!betAmount || !selectedTeam || !selectedCrypto}
         >
           <CoinIcon className="mr-2 h-4 w-4" />
           Place Bet
         </Button>
       </div>
     </motion.div>
-  )
+  );
 }
-
