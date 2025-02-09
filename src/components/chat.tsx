@@ -1,33 +1,50 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Bot, Send, User } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Bot, Send, User } from "lucide-react";
 
 type Message = {
-  role: "user" | "bot"
-  content: string
-}
+  role: "user" | "bot";
+  content: string;
+};
 
 export function Chat() {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState("")
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
-      setMessages([...messages, { role: "user", content: input }])
-      // Simulate bot response
-      setTimeout(() => {
+      setMessages([...messages, { role: "user", content: input }]);
+
+      try {
+        const response = await fetch(
+          "https://autonome.alt.technology/test-qxbssa/poke",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: input }),
+          }
+        );
+        const data = await response.json();
+        setMessages((prev) => [...prev, { role: "bot", content: data.text }]);
+      } catch (error) {
         setMessages((prev) => [
           ...prev,
-          { role: "bot", content: "Thank you for your message. How can I assist you with your research today?" },
-        ])
-      }, 1000)
-      setInput("")
+          {
+            role: "bot",
+            content: "Sorry, something went wrong. Please try again.",
+          },
+        ]);
+      }
+
+      setInput("");
     }
-  }
+  };
 
   return (
     <motion.div
@@ -43,14 +60,22 @@ export function Chat() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+            className={`flex ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
           >
             <div
               className={`flex items-start space-x-2 ${
-                message.role === "user" ? "flex-row-reverse space-x-reverse" : "flex-row"
+                message.role === "user"
+                  ? "flex-row-reverse space-x-reverse"
+                  : "flex-row"
               }`}
             >
-              <div className={`p-2 rounded-full ${message.role === "user" ? "bg-purple-600" : "bg-gray-700"}`}>
+              <div
+                className={`p-2 rounded-full ${
+                  message.role === "user" ? "bg-purple-600" : "bg-gray-700"
+                }`}
+              >
                 {message.role === "user" ? (
                   <User className="w-4 h-4 text-white" />
                 ) : (
@@ -59,7 +84,9 @@ export function Chat() {
               </div>
               <div
                 className={`p-3 rounded-lg ${
-                  message.role === "user" ? "bg-purple-600 text-white" : "bg-gray-700 text-gray-100"
+                  message.role === "user"
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-700 text-gray-100"
                 }`}
               >
                 {message.content}
@@ -71,8 +98,8 @@ export function Chat() {
       <div className="p-4 border-t border-purple-500/20">
         <form
           onSubmit={(e) => {
-            e.preventDefault()
-            handleSend()
+            e.preventDefault();
+            handleSend();
           }}
           className="flex space-x-2"
         >
@@ -88,6 +115,5 @@ export function Chat() {
         </form>
       </div>
     </motion.div>
-  )
+  );
 }
-
