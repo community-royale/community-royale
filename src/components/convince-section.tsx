@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { FileText } from "lucide-react";
 import { Chat } from "./chat";
 
 export default function ConvinceSection() {

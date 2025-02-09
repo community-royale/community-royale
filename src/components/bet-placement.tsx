@@ -16,7 +16,7 @@ import Image from "next/image";
 
 export function BetPlacement() {
   const [betAmount, setBetAmount] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState("");
+  const [selectedTeam] = useState("");
   const [selectedCrypto, setSelectedCrypto] = useState("");
 
   const handlePlaceBet = () => {

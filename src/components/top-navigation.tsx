@@ -1,8 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { Home, FileText, DollarSign } from "lucide-react";
-
 export default function TopNavigation() {
   return (
     <div className="relative z-10 flex justify-between items-center p-4 bg-black/[0.8]">

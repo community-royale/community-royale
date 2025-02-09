@@ -1,8 +1,6 @@
 "use client";
 
-import { Chat } from "@/components/chat";
 import { BetPlacement } from "@/components/bet-placement";
-import { Stats } from "@/components/stats";
 
 export default function BetsSection() {
   return (

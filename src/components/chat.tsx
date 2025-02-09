@@ -32,7 +32,7 @@ export function Chat() {
         );
         const data = await response.json();
         setMessages((prev) => [...prev, { role: "bot", content: data.text }]);
-      } catch (error) {
+      } catch {
         setMessages((prev) => [
           ...prev,
           {

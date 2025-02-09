@@ -9,7 +9,7 @@ interface Window {
   };
 }
 
-declare var window: Window & typeof globalThis;
+declare let window: Window & typeof globalThis;
 
 export const initTelegramApp = () => {
   return new Promise((resolve) => {

@@ -3,14 +3,13 @@ import BottomNavigation from "@/components/bottom-navigation";
 import HomeSection from "@/components/home-section";
 import { SparklesCore } from "@/components/sparkles";
 import TopNavigation from "@/components/top-navigation";
-import { initTelegramApp } from "@/lib/telegram";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
     const initTelegram = async () => {
       try {
-        const webApp = await initTelegramApp();
+        // const webApp = await initTelegramApp();
         // Store WebApp instance in global state if needed
         console.log("Telegram WebApp initialized");
       } catch (error) {
